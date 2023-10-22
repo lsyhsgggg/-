@@ -1,22 +1,40 @@
 #include<iostream>
+#include<string>
+#include<algorithm>
 using namespace std;
-string arr[101];//定义一个字符串数组,用于后面存放字符串
-int main(){
+class gg {
+public:
+	string data;
+	int len;
+	int num;
+};//创建一个类，类的属性包括一个字符串存放数据，一个整数存放字符串长度（数据位数），还有一个整数存放对象在数组中下标
+gg arr[21];
+bool cmp(gg a,gg b) {
+	return a.data > b.data;
+}
+int main() {
 	int n;
 	cin >> n;
-	for (int i = 0; i < n; i++) {//循环n次操作字符串
-		string gg;
-		for (int j = 0; j < 8; j++) {
-			cin >> gg;
-			arr[i] += gg;/*向arr[i]里面存放一个棋盘的字符串(初学者自己的感悟, for循环无法保存数据, 下一次循环这一次的数据就会清零,
-			所以某些情况我们可以像这样找一个载体每轮循环给它加上去,也就保存了下来)*/
-		}
-		//接下来应该把刚刚保存的字符串拿去对比
-		int jishuqi = 1;//计数器记录出现次数,默认情况出现次数为1;
-		for (int k = 0; k < i; k++) {
-			if (arr[i] == arr[k]) { jishuqi++; }
-		}//对比,计数
-		cout << jishuqi << endl;//输出出现次数
+	for (int i = 1; i <= n; i++) {
+		string ff;
+		cin >> ff;
+		arr[i].data = ff;
+		arr[i].len = ff.length();
+		arr[i].num = i;
 	}
-	return 0;
+	int maxx = 0;
+	for (int i = 1; i <= n; i++) {
+		if (arr[i].len > maxx) { maxx = arr[i].len; }
+	}
+	for (int i = 1; i <= n; i++) {
+		for (int j = 0; j < (maxx - arr[i].len); j++) {
+			arr[i].data += "0";//将所有对象的数据末尾补零，补到与对象中最长字符串长度相同。
+		}
+	}
+	sort(&arr[1], &arr[1] + n, cmp);//比较不同字符串的大小，从大到小排好序
+	for (int i = 1; i <= n; i++) {
+		for (int j = 0; j < arr[i].len; j++) {
+			cout << arr[i].data[j];
+		}
+		}
 }
