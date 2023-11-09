@@ -1,0 +1,74 @@
+#include<iostream>
+#include<string>
+#include<algorithm>
+#include<cmath>
+#include<vector>
+using namespace std;
+//这是洛谷
+class person {
+public:
+	int num;
+	string name;
+	int xiabiao=-1;
+};
+class instruction {
+public:
+	int n1;
+	int n2;
+};
+person arr[100000];
+instruction arr1[100000];
+
+int main() {
+	int n, m;//n是小人个数，m是指令条数
+	cin >> n >> m;
+	for (int i = 0; i < n; i++) {
+		int input;
+		string inputt;
+		cin >> input >> inputt;
+		arr[i].num = input;
+		arr[i].name = inputt;
+		arr[i].xiabiao = i;
+	}
+	person* p = arr;
+	for (int i = 0; i < m; i++) {
+		int input, inputt;
+		cin >> input >> inputt;
+		arr1[i].n1 = input;
+		arr1[i].n2 = inputt;
+	}
+	for (int i = 0; i < m; i++)
+	{
+		if ((arr1[i].n1 == 0 && p->num == 0) || (arr1[i].n1 == 1 && p->num == 1)) {
+			int ans = p->xiabiao - arr1[i].n2;
+			if (ans < 0) { 
+				ans = ans + n; 
+				p=&arr[ans];
+			}
+			else {
+				p = &arr[ans];
+			}
+
+
+		}
+		else {
+			int ans = p->xiabiao + arr1[i].n2;
+			if (ans > n - 1) {
+				ans = ans - n;
+				p = &arr[ans];
+			}
+			else {
+				p = &arr[ans];
+			}
+
+
+		}
+	}
+
+	
+	cout << p->name;
+
+
+
+
+}
