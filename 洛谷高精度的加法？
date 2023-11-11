@@ -1,0 +1,93 @@
+#include<iostream>
+#include<string>
+#include<algorithm>
+#include<cmath>
+#include<vector>
+#include<cmath>
+using namespace std;
+//这是洛谷
+int trans(const char&a) {
+	if (a == '0') return 0;
+	if (a == '1') return 1;
+	if (a == '2') return 2;
+	if (a == '3') return 3;
+	if (a == '4') return 4;
+	if (a == '5') return 5;
+	if (a == '6') return 6;
+	if (a == '7') return 7;
+	if (a == '8') return 8;
+	if (a == '9') return 9;
+}
+string compare(string a,string b) {
+	if (a.length() > b.length())
+		return a;
+	else return b;
+
+}
+int main() {
+	int ans[1000];
+	for (int i = 0; i < 1000; i++) {
+		ans[i] = -1;
+	}
+	string a;
+	string b;
+	cin >> a >> b;
+	int lena = a.length();
+	int lenb = b.length();
+	reverse(a.begin(), a.end());
+	reverse(b.begin(), b.end());
+	
+	
+	int minn = min(lena, lenb);
+	int gg = lena - lenb;
+	if (gg < 0) gg *= -1;
+	bool tag = false;
+	for (int i = 0; i < minn; i++) {
+		int sum = trans (a[i]) + trans(b[i]);
+		if (tag) sum++;
+		if ( sum>= 10&& i == minn - 1) {
+				sum -= 10;
+				ans[999 - i] = sum;
+				
+				ans[999 - i - 1] = 1;
+			}
+		else if (sum >= 10 && i != minn - 1) {
+				sum -= 10;
+				ans[999 - i] = sum;
+			
+				tag = true;
+			}
+		
+		else {
+			ans[999 - i] = sum;
+			
+			tag = false;
+		}
+	}
+	if (lena != lenb) {
+		string str = compare(a, b);
+		
+	
+		for (int i = 0; i < gg; i++) {
+			if (ans[999 - i - minn] < 0) { ans[999 - i - minn]++; }
+			int numm = ans[999 - i - minn] + trans(str[minn + i]);
+			if (numm >= 10) {
+				numm -= 10;
+				ans[999 - i - minn - 1] = 1;
+			}
+			ans[999 - i - minn] = numm;
+		}
+
+
+	}
+
+	for (int i = 0; i < 1000; i++) {
+		if (ans[i] >= 0) cout << ans[i];
+	}
+	/*cout << ans[995];*/
+	/*cout << ans[996];*/
+	/*cout << ans[997];
+	cout << ans[998];
+	cout << ans[999];*/
+
+}
